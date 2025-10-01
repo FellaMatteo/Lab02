@@ -9,18 +9,24 @@ def carica_da_file(file_path):
         with open(nome_file, newline="") as infile:
             reader = csv.reader(infile)
             for riga in reader:
-                for colonna in reader:
-                    lista_riga = riga
-                    biblioteca.append(lista_riga)
+                lista_riga = riga
+                biblioteca.append(lista_riga)
     except FileNotFoundError:
-        print("None")
+        return None
 #creo una lista (biblioteca) di liste in cui ogni lista contiene il titolo del libro e tutti i suoi attributi
 
 
 def aggiungi_libro(biblioteca, titolo, autore, anno, pagine, sezione, file_path):
     """Aggiunge un libro nella biblioteca"""
     # TODO
+    for libro in biblioteca:
+        if libro[0] == titolo:
+            return None
 
+    nuovo_libro = [titolo, autore, anno, pagine, sezione]
+    biblioteca.append(nuovo_libro)
+#controllo che nella libreria non sia gia presente il titolo da inserire (in tal caso blocco la funzione)
+#e nel caso non fosse presente inserisco il libro e i suoi attributi nella libreria
 
 def cerca_libro(biblioteca, titolo):
     """Cerca un libro nella biblioteca dato il titolo"""
