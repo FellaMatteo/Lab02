@@ -1,6 +1,20 @@
+import csv
+
 def carica_da_file(file_path):
     """Carica i libri dal file"""
     # TODO
+    biblioteca = []
+    nome_file = input("Inserisci il nome da file: ")
+    try:
+        with open(nome_file, newline="") as infile:
+            reader = csv.reader(infile)
+            for riga in reader:
+                for colonna in reader:
+                    lista_riga = riga
+                    biblioteca.append(lista_riga)
+    except FileNotFoundError:
+        print("None")
+#creo una lista (biblioteca) di liste in cui ogni lista contiene il titolo del libro e tutti i suoi attributi
 
 
 def aggiungi_libro(biblioteca, titolo, autore, anno, pagine, sezione, file_path):
