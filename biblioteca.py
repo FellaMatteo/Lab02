@@ -2,17 +2,16 @@ import csv
 
 def carica_da_file(file_path):
     """Carica i libri dal file"""
-    # TODO
     biblioteca = []
-    nome_file = input("Inserisci il nome da file: ")
     try:
-        with open(nome_file, newline="") as infile:
+        with open(file_path, newline="") as infile:
             reader = csv.reader(infile)
             for riga in reader:
-                lista_riga = riga
-                biblioteca.append(lista_riga)
+                biblioteca.append(riga)
+        return biblioteca
     except FileNotFoundError:
         return None
+
 #creo una lista (biblioteca) di liste in cui ogni lista contiene il titolo del libro e tutti i suoi attributi
 
 
@@ -25,6 +24,16 @@ def aggiungi_libro(biblioteca, titolo, autore, anno, pagine, sezione, file_path)
 
     nuovo_libro = [titolo, autore, anno, pagine, sezione]
     biblioteca.append(nuovo_libro)
+
+#ora aggingo il nuovo libro anche al file csv
+    try:
+            with open(file_path, "a", newline="") as outfile:
+                writer = csv.writer(outfile)
+                writer.writerow(nuovo_libro)
+            return nuovo_libro
+    except FileNotFoundError:
+            return None
+
 #controllo che nella libreria non sia gia presente il titolo da inserire (in tal caso blocco la funzione)
 #e nel caso non fosse presente inserisco il libro e i suoi attributi nella libreria
 
@@ -34,13 +43,21 @@ def cerca_libro(biblioteca, titolo):
     for libro in biblioteca:
         if libro[0] == titolo:   #il titolo è la prima colonna!
             return libro
-    return None
+    return None  #Se il ciclo finisce senza trovare nulla, la funzione ritorna None per indicare “non trovato”
 
 
 def elenco_libri_sezione_per_titolo(biblioteca, sezione):
     """Ordina i titoli di una data sezione della biblioteca in ordine alfabetico"""
     # TODO
+    risultato = []
+    for libro in biblioteca:
+        if str(libro[4]) == str(sezione):
+            risultato.append(libro[0])
 
+        if not risultato:    #sezione non trovata
+            return None
+
+        return sorted(risultato)    # sorted ordina in ordine alfabetico
 
 def main():
     biblioteca = []
